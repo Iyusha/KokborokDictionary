@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<DataGroup> dataGroups) {
             //super.onPostExecute(aBoolean);
             //Log.e("data", mList.toString());
+            mList.clear();
             mList.addAll(dataGroups);
 
             adapter = new ResultAdapter(MainActivity.this, mList);
