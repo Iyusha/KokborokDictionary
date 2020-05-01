@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,29 +83,44 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ResultView
                 DataRow dataRow = dataGroup.getDataRows().get(i);
 
                 LinearLayout root = new LinearLayout(context);
+                root.setBackgroundResource(R.drawable.border);
                 root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
+                LinearLayout.LayoutParams SLlayoutParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1.0f);
 
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 2.0f);
 
                 if (i == 0) {
                     //create header
                     LinearLayout root1 = new LinearLayout(context);
-                    root1.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    root1.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     root1.setBackgroundColor(Color.WHITE);
-                    root1.setPadding(10, 10, 10, 10);
+                    //root1.setPadding(10, 10, 10, 10);
 
+                    TextView tv0 = new TextView(context);
+                    tv0.setBackgroundResource(R.drawable.border);
+                    tv0.setPadding(10, 10, 10, 10);
+                    tv0.setLayoutParams(SLlayoutParams);
                     TextView tv1 = new TextView(context);
+                    tv1.setBackgroundResource(R.drawable.border);
+                    tv1.setPadding(10, 10, 10, 10);
                     tv1.setLayoutParams(layoutParams);
                     TextView tv2 = new TextView(context);
+                    tv2.setBackgroundResource(R.drawable.border);
+                    tv2.setPadding(10, 10, 10, 10);
                     tv2.setLayoutParams(layoutParams);
                     TextView tv3 = new TextView(context);
+                    tv3.setBackgroundResource(R.drawable.border);
+                    tv3.setPadding(10, 10, 10, 10);
                     tv3.setLayoutParams(layoutParams);
 
+                    tv0.setText("SL");
                     tv1.setText("English");
                     tv2.setText("Bangla");
                     tv3.setText("Kokborok");
 
+                    tv0.setTypeface(null, Typeface.BOLD);
+                    tv0.setTextSize(16);
                     tv1.setTypeface(null, Typeface.BOLD);
                     tv1.setTextSize(16);
                     tv2.setTypeface(null, Typeface.BOLD);
@@ -112,33 +128,50 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ResultView
                     tv3.setTypeface(null, Typeface.BOLD);
                     tv1.setTextSize(16);
 
+                    tv0.setGravity(Gravity.CENTER);
+                    
+                    root1.addView(tv0);
                     root1.addView(tv1);
-                    root1.addView(tv2);
                     root1.addView(tv3);
+                    root1.addView(tv2);
 
                     rows.addView(root1);
                     rows.addView(getHR());
                 }
 
+                TextView tv0 = new TextView(context);
+                tv0.setBackgroundResource(R.drawable.border);
+                tv0.setPadding(10, 10, 10, 10);
+                tv0.setLayoutParams(SLlayoutParams);
                 TextView tv1 = new TextView(context);
+                tv1.setBackgroundResource(R.drawable.border);
+                tv1.setPadding(10, 10, 10, 10);
                 tv1.setLayoutParams(layoutParams);
                 TextView tv2 = new TextView(context);
+                tv2.setBackgroundResource(R.drawable.border);
+                tv2.setPadding(10, 10, 10, 10);
                 tv2.setLayoutParams(layoutParams);
                 TextView tv3 = new TextView(context);
+                tv3.setBackgroundResource(R.drawable.border);
+                tv3.setPadding(10, 10, 10, 10);
                 tv3.setLayoutParams(layoutParams);
 
+                tv0.setText(String.valueOf(i+1));
                 tv1.setText(dataRow.getEnglish().trim());
                 tv2.setText(dataRow.getBangla().trim());
                 tv3.setText(dataRow.getKokborok().trim());
 
+                tv0.setPadding(5, 5, 5, 5);
                 tv1.setPadding(5, 5, 5, 5);
                 tv2.setPadding(5, 5, 5, 5);
                 tv3.setPadding(5, 5, 5, 5);
 
+                tv0.setGravity(Gravity.CENTER);
 
+                root.addView(tv0);
                 root.addView(tv1);
-                root.addView(tv2);
                 root.addView(tv3);
+                root.addView(tv2);
 
                 rows.addView(root);
                 rows.addView(getHR());
