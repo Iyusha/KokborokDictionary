@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -67,20 +68,72 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // find out the key from database and display in the UI
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                    }
+//                });
                 findAndDisplayResult(search_key);
 
             }
         });
     }
 
+    private class AsyncProcess extends AsyncTask<String, Integer, ArrayList<DataGroup>>{
+
+        @Override
+        protected void onPreExecute() {
+            //super.onPreExecute();
+            progress_root.setVisibility(View.VISIBLE);
+
+        }
+
+        @Override
+        protected ArrayList<DataGroup> doInBackground(String... strings) {
+//            findAndDisplayResult(strings[0]);
+            //onProgressUpdate(0);
+            String search_key = strings[0];
+            return dbHandler.findWord(search_key);
+            //onProressUpdate(100);
+            //return true;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            //super.onProgressUpdate(values);
+//            if(values[0]==0){
+//                progress_root.setVisibility(View.VISIBLE);
+//            }else{
+//                progress_root.setVisibility(View.GONE);
+//            }
+
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<DataGroup> dataGroups) {
+            //super.onPostExecute(aBoolean);
+            //Log.e("data", mList.toString());
+            mList.addAll(dataGroups);
+
+            adapter = new ResultAdapter(MainActivity.this, mList);
+            result_rv.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+            result_rv.setAdapter(adapter);
+
+            //adapter.notifyDataSetChanged();
+
+            progress_root.setVisibility(View.GONE);
+        }
+    }
 
     private void findAndDisplayResult(String search_key) {
-        mList = dbHandler.findWord(search_key);
+        new AsyncProcess().execute(search_key);
+
         //result.setText(mList.toString());
-        Log.e("data", mList.toString());
+        /*Log.e("data", mList.toString());
         adapter = new ResultAdapter(this, mList);
         result_rv.setLayoutManager(new LinearLayoutManager(this));
         result_rv.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();*/
     }
 }

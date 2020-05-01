@@ -3,6 +3,9 @@ package com.example.kokborokdictionary.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -73,7 +76,16 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ResultView
                 container_root.setVisibility(View.GONE);
                 return;
             }
-            label.setText(dataGroup.getDataRows().size() + " record" + (dataGroup.getDataRows().size() == 0 ? "" : "s") + " found in " + dataGroup.getGroupKey()+" word");
+            String text = "<b>"+dataGroup.getDataRows().size() + "</b> record" + (dataGroup.getDataRows().size() == 0 ? "" : "s") + " found in <b><i>" + dataGroup.getGroupKey().toUpperCase()+"</i></b> word";
+
+            Spanned spanned;
+            if(Build.VERSION.SDK_INT>Build.VERSION_CODES.M){
+                spanned = Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY);
+            }else{
+                spanned = Html.fromHtml(text);
+            }
+            label.setText(spanned);
+            
             //description.setText(dataGroup.getDataRows().toString());
 
             for (int i = 0; i < dataGroup.getDataRows().size(); i++) {
@@ -129,7 +141,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ResultView
                     tv1.setTextSize(16);
 
                     tv0.setGravity(Gravity.CENTER);
-                    
+
                     root1.addView(tv0);
                     root1.addView(tv1);
                     root1.addView(tv3);
